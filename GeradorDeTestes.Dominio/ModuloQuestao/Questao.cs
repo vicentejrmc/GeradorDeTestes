@@ -1,0 +1,72 @@
+﻿using GeradorDeTestes.Dominio.Compartilhado;
+using GeradorDeTestes.Dominio.ModuloMateria;
+using GeradorDeTestes.Dominio.ModuloTeste;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace GeradorDeTestes.Dominio.ModuloQuestao;
+public class Questao : EntidadeBase<Questao>
+{
+    public string Enuciado { get; set; }
+    public bool UtilizadaEmTeste { get; set; }
+    public Materia Materia { get; set; }
+    public List<Teste> Testes { get; set; }
+    public List<Alternativa> Alternativas { get; set; }
+    public Alternativa? AlternativaCorreta => Alternativas.Find(a => a.Correta);
+
+    public Questao()
+    {
+        Alternativas = new List<Alternativa>();
+        Testes = new List<Teste>();
+    }
+
+    public Questao(string enuciado, Materia materia) : this()
+    {
+        Id = Guid.NewGuid();
+        Enuciado = enuciado;
+        UtilizadaEmTeste = false;
+        Materia = materia;
+    }
+
+    public override void AtualizarRegistro(Questao registroAtualizado)
+    {
+        Enuciado = registroAtualizado.Enuciado;
+        UtilizadaEmTeste = registroAtualizado.UtilizadaEmTeste;
+    }
+
+    public Alternativa AddAlternativa(string resposta, bool correta)
+    {
+        int qteAlternativas = Alternativas.Count;
+        char letra = (char)('a' + qteAlternativas);
+
+        var alternativa = new Alternativa(letra, resposta, correta, this);
+        Alternativas.Add(alternativa);
+
+        return alternativa;
+    }
+
+    public void RemoverAlternativa(char letra)
+    {
+        if (!Alternativas.Any(a => a.Letra.Equals(letra)))
+            return;
+
+        var alternativa = Alternativas.Find(a => a.Letra.Equals(letra));
+
+        if (alternativa == null) return;
+
+        Alternativas.Remove(alternativa);
+        ReatribuirLetra();
+    }
+
+    private void ReatribuirLetra()
+    {
+        for (int i = 0; i < Alternativas.Count; i++)
+        {
+            Alternativas[i].Letra = (char)('a' + i);
+        }
+    }
+}
