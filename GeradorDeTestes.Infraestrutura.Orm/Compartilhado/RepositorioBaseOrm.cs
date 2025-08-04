@@ -12,6 +12,11 @@ public class RepositorioBaseOrm<T> where T : EntidadeBase<T>
 {
     protected readonly DbSet<T> registros;
 
+    public RepositorioBaseOrm(GeradorDeTestesDbContext context)
+    {
+        this.registros = context.Set<T>();
+    }
+
     public void Cadastrar(T novoRegistro)
     {
         registros.Add(novoRegistro);

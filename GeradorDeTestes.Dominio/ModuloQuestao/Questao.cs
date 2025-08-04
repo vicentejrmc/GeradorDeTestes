@@ -11,7 +11,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace GeradorDeTestes.Dominio.ModuloQuestao;
 public class Questao : EntidadeBase<Questao>
 {
-    public string Enuciado { get; set; }
+    public string Enunciado { get; set; }
     public bool UtilizadaEmTeste { get; set; }
     public Materia Materia { get; set; }
     public List<Teste> Testes { get; set; }
@@ -24,17 +24,17 @@ public class Questao : EntidadeBase<Questao>
         Testes = new List<Teste>();
     }
 
-    public Questao(string enuciado, Materia materia) : this()
+    public Questao(string enunciado, Materia materia) : this()
     {
         Id = Guid.NewGuid();
-        Enuciado = enuciado;
+        Enunciado = enunciado;
         UtilizadaEmTeste = false;
         Materia = materia;
     }
 
     public override void AtualizarRegistro(Questao registroAtualizado)
     {
-        Enuciado = registroAtualizado.Enuciado;
+        Enunciado = registroAtualizado.Enunciado;
         UtilizadaEmTeste = registroAtualizado.UtilizadaEmTeste;
     }
 
