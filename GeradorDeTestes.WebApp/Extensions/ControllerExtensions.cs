@@ -1,4 +1,5 @@
-﻿using GeradorDeTestes.WebApp.Models;
+﻿using FluentResults;
+using GeradorDeTestes.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeradorDeTestes.WebApp.Extensions;

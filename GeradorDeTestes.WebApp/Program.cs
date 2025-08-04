@@ -1,5 +1,10 @@
+using GeradorDeTestes.Aplicacao.ModuloDisciplina;
 using GeradorDeTestes.Dominio.ModuloDisciplina;
+using GeradorDeTestes.Dominio.ModuloMateria;
+using GeradorDeTestes.Dominio.ModuloTeste;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloDisciplina;
+using GeradorDeTestes.Infraestrutura.Orm.ModuloMateria;
+using GeradorDeTestes.Infraestrutura.Orm.ModuloTeste;
 using GeradorDeTestes.WebApp.ActionFilters;
 using GeradorDeTestes.WebApp.DependencyInjection;
 using GeradorDeTestes.WebApp.Orm;
@@ -14,11 +19,13 @@ public class Program
 
         if(builder.Environment.IsDevelopment())
         {
-            //AppService
-            //builder.Services.AddScoped<EntidadeAppService>();
+            //AppServices
+            builder.Services.AddScoped<DisciplinaAppService>();
 
             //Repositorios
             builder.Services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaOrm>();
+            builder.Services.AddScoped<IRepositorioMateria, RepositorioMateriaOrm>();
+            builder.Services.AddScoped<IRepositorioTeste, RepositorioTesteOrm>();
 
             builder.Services.AddEntityFrameworkConfig(builder.Configuration);
         }

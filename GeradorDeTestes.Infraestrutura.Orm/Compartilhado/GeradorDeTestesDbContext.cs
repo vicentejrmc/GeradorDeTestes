@@ -1,4 +1,5 @@
-﻿using GeradorDeTestes.Dominio.ModuloDisciplina;
+﻿using GeradorDeTestes.Dominio.Compartilhado;
+using GeradorDeTestes.Dominio.ModuloDisciplina;
 using GeradorDeTestes.Dominio.ModuloMateria;
 using GeradorDeTestes.Dominio.ModuloQuestao;
 using GeradorDeTestes.Dominio.ModuloTeste;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 namespace GeradorDeTestes.Infraestrutura.Orm.Compartilhado;
-public class GeradorDeTestesDbContext : DbContext
+public class GeradorDeTestesDbContext : DbContext, IUnitOfWork
 {
    public DbSet<Disciplina> Disciplinas { get; set; }
    public DbSet<Materia> Materias { get; set; }
@@ -28,7 +29,7 @@ public class GeradorDeTestesDbContext : DbContext
         SaveChanges();
     }
 
-    public void RollBack()
+    public void Rollback()
     {
         foreach(var entrada in ChangeTracker.Entries())
         {

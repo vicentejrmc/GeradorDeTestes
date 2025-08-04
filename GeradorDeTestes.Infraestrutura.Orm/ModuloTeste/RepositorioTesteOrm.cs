@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GeradorDeTestes.Infraestrutura.Orm.ModuloTeste;
-public class RepositorioTesteOrm : RepositorioBaseOrm<Teste>
+public class RepositorioTesteOrm : RepositorioBaseOrm<Teste>, IRepositorioTeste
 {
     public RepositorioTesteOrm(GeradorDeTestesDbContext context) : base(context){}
 
