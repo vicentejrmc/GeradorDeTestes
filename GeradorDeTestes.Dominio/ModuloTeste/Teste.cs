@@ -16,8 +16,8 @@ public class Teste : EntidadeBase<Teste>
     public bool Recuperacao { get; set; }
     public int QteQuestoes { get; set; }
     public Disciplina Disciplina { get; set; }
-    public Materia? Materia { get; set; }
     public SerieMateria Serie { get; set; }
+    public Materia? Materia { get; set; }
     public List<Questao> Questoes { get; set; } = new List<Questao>();
 
     public Teste() { }
@@ -25,8 +25,8 @@ public class Teste : EntidadeBase<Teste>
     public Teste(string titulo,
         bool recuperacao, 
         int qteQuestoes,
-        SerieMateria serie,
         Disciplina disciplina,
+        SerieMateria serieMateria,
         Materia materia
         ) : this()
     {
@@ -34,15 +34,15 @@ public class Teste : EntidadeBase<Teste>
         DataGeracao = DateTime.UtcNow;
         Titulo = titulo;    
         Recuperacao = recuperacao;
-        Serie = serie;
         Disciplina = disciplina;
+        Serie = serieMateria;
         Materia = materia;
     }
 
     public Teste(string titulo,
     bool recuperacao,
     int qteQuestoes,
-    SerieMateria serie,
+    SerieMateria serieMateria,
     Disciplina disciplina,
     Materia materia,
     List<Questao> questoes
@@ -52,7 +52,7 @@ public class Teste : EntidadeBase<Teste>
         DataGeracao = DateTime.UtcNow;
         Titulo = titulo;
         Recuperacao = recuperacao;
-        Serie = serie;
+        Serie = serieMateria;
         Disciplina = disciplina;
         Materia = materia;
         foreach (var item in questoes)

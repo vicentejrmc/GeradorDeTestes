@@ -12,7 +12,7 @@ namespace GeradorDeTestes.Dominio.ModuloMateria;
 public class Materia : EntidadeBase<Materia>
 {
     public string Nome {  get; set; }
-    public SerieDaMateria Serie {  get; set; }
+    public SerieMateria Serie {  get; set; }
     public Disciplina Disciplina { get; set; }
     public List<Questao> Questoes { get; set; }
     public List<Teste> Testes { get; set; }
@@ -23,7 +23,7 @@ public class Materia : EntidadeBase<Materia>
         Testes = new List<Teste>();
     }
 
-    public Materia(string nome, SerieDaMateria serie, Disciplina disciplina) : this() 
+    public Materia(string nome, SerieMateria serie, Disciplina disciplina) : this() 
     {
         Id = Guid.NewGuid();
         Nome = nome;

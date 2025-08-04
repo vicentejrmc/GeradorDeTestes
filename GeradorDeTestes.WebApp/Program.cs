@@ -1,3 +1,5 @@
+using GeradorDeTestes.Dominio.ModuloDisciplina;
+using GeradorDeTestes.Infraestrutura.Orm.ModuloDisciplina;
 using GeradorDeTestes.WebApp.ActionFilters;
 using GeradorDeTestes.WebApp.DependencyInjection;
 using GeradorDeTestes.WebApp.Orm;
@@ -16,7 +18,7 @@ public class Program
             //builder.Services.AddScoped<EntidadeAppService>();
 
             //Repositorios
-            //builder.Services.AddScoped<IrepositorioEntidade, RepositorioEntidade>();
+            builder.Services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaOrm>();
 
             builder.Services.AddEntityFrameworkConfig(builder.Configuration);
         }

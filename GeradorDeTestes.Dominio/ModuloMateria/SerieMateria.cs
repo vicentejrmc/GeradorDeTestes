@@ -2,7 +2,7 @@
 
 namespace GeradorDeTestes.Dominio.ModuloMateria;
 
-public enum SerieDaMateria
+public enum SerieMateria
 {
     [Display(Name = "Primeiro Ano")] PrimeiroAno = 1,
     [Display(Name = "Segundo Ano")] SegundoAno = 2,
