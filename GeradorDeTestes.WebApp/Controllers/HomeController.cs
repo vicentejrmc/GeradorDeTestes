@@ -13,13 +13,13 @@ public class HomeController : Controller
     [HttpGet("erro")]
     public IActionResult Erro()
     {
-        var existeNotificacao = TempData.TryGetValue(nameof(NotificacaoViewlModel), out var valor);
+        var existeNotificacao = TempData.TryGetValue(nameof(NotificacaoViewModel), out var valor);
 
         if (existeNotificacao && valor is string jsonString)
         {
-            var notificacaoVm = JsonSerializer.Deserialize<NotificacaoViewlModel>(jsonString);
+            var notificacaoVm = JsonSerializer.Deserialize<NotificacaoViewModel>(jsonString);
 
-            ViewData.Add(nameof(NotificacaoViewlModel), notificacaoVm);
+            ViewData.Add(nameof(NotificacaoViewModel), notificacaoVm);
         }
 
         return View();

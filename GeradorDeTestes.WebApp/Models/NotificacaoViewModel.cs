@@ -2,14 +2,14 @@
 
 namespace GeradorDeTestes.WebApp.Models;
 
-public class NotificacaoViewlModel
+public class NotificacaoViewModel
 {
     public required string Titulo { get; set; }
     public required string Mensagem { get; set; }
 
     public static string GerarNotificacaoSerializada(string titulo, string mensagem)
     {
-        var notificacao = new NotificacaoViewlModel
+        var notificacao = new NotificacaoViewModel
         {
             Titulo = titulo,
             Mensagem = mensagem

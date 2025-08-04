@@ -34,7 +34,7 @@ public class Program
 
         if (app.Environment.IsDevelopment())
         {
-            //app.ApplyMigrations();
+            app.ApplyMigrations();
 
             app.UseDeveloperExceptionPage();
         }

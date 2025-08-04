@@ -27,6 +27,7 @@ public class Disciplina : EntidadeBase<Disciplina>
         Guid Id = Guid.NewGuid();
         Nome = nome;
     }
+
     public List<Questao> SortearQuestoes(int quantidadeQuestoes, SerieMateria serie)
     {
         var questoes = new List<Questao>();
