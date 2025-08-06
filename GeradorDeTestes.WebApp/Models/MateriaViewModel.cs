@@ -64,9 +64,7 @@ public class EditarMateriaViewModel : FormularioMateriaViewModel
         Serie = serie;
         DisciplinaId = disciplinaId;
 
-        DisciplinasDisponiveis = disciplinas
-            .Select(d => new SelectListItem(d.Nome, d.Id.ToString()))
-            .ToList();
+        DisciplinasDisponiveis = disciplinas.Select(d => new SelectListItem(d.Nome, d.Id.ToString())).ToList();
     }
 }
 

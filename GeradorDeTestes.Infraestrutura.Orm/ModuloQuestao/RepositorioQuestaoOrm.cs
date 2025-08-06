@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GeradorDeTestes.Infraestrutura.Orm.ModuloQuestao;
-public class RepositorioQuestaoOrm : RepositorioBaseOrm<Questao>
+public class RepositorioQuestaoOrm : RepositorioBaseOrm<Questao>, IRepositorioQuestao
 {
     public RepositorioQuestaoOrm(GeradorDeTestesDbContext context) : base(context){}
 

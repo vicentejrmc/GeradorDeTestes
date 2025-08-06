@@ -1,9 +1,12 @@
 using GeradorDeTestes.Aplicacao.ModuloDisciplina;
+using GeradorDeTestes.Aplicacao.ModuloMateria;
 using GeradorDeTestes.Dominio.ModuloDisciplina;
 using GeradorDeTestes.Dominio.ModuloMateria;
+using GeradorDeTestes.Dominio.ModuloQuestao;
 using GeradorDeTestes.Dominio.ModuloTeste;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloDisciplina;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloMateria;
+using GeradorDeTestes.Infraestrutura.Orm.ModuloQuestao;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloTeste;
 using GeradorDeTestes.WebApp.ActionFilters;
 using GeradorDeTestes.WebApp.DependencyInjection;
@@ -21,10 +24,12 @@ public class Program
         {
             //AppServices
             builder.Services.AddScoped<DisciplinaAppService>();
+            builder.Services.AddScoped<MateriaAppService>();
 
             //Repositorios
             builder.Services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaOrm>();
             builder.Services.AddScoped<IRepositorioMateria, RepositorioMateriaOrm>();
+            builder.Services.AddScoped<IRepositorioQuestao, RepositorioQuestaoOrm>();
             builder.Services.AddScoped<IRepositorioTeste, RepositorioTesteOrm>();
 
             builder.Services.AddEntityFrameworkConfig(builder.Configuration);
