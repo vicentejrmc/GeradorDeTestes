@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GeradorDeTestes.Dominio.ModuloQuestao;
-public interface IGeradorDeQuestoes
+public interface IGeradorQuestoes
 {
-    public Task<List<Questao>> GeradorDeQuestoesAsync(Materia materia, int quantidade);
+    public Task<List<Questao>> GerarQuestoesAsync(Materia materia, int quantidade);
 }

@@ -1,5 +1,7 @@
 using GeradorDeTestes.Aplicacao.ModuloDisciplina;
 using GeradorDeTestes.Aplicacao.ModuloMateria;
+using GeradorDeTestes.Aplicacao.ModuloQuestao;
+using GeradorDeTestes.Aplicacao.ModuloTeste;
 using GeradorDeTestes.Dominio.ModuloDisciplina;
 using GeradorDeTestes.Dominio.ModuloMateria;
 using GeradorDeTestes.Dominio.ModuloQuestao;
@@ -20,22 +22,21 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        if(builder.Environment.IsDevelopment())
-        {
-            //AppServices
-            builder.Services.AddScoped<DisciplinaAppService>();
-            builder.Services.AddScoped<MateriaAppService>();
+        //AppServices
+        builder.Services.AddScoped<DisciplinaAppService>();
+        builder.Services.AddScoped<MateriaAppService>();
+        builder.Services.AddScoped<QuestaoAppService>();
+        builder.Services.AddScoped<TesteAppService>();
 
-            //Repositorios
-            builder.Services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaOrm>();
-            builder.Services.AddScoped<IRepositorioMateria, RepositorioMateriaOrm>();
-            builder.Services.AddScoped<IRepositorioQuestao, RepositorioQuestaoOrm>();
-            builder.Services.AddScoped<IRepositorioTeste, RepositorioTesteOrm>();
+        //Repositorios
+        builder.Services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaOrm>();
+        builder.Services.AddScoped<IRepositorioMateria, RepositorioMateriaOrm>();
+        builder.Services.AddScoped<IRepositorioQuestao, RepositorioQuestaoOrm>();
+        builder.Services.AddScoped<IRepositorioTeste, RepositorioTesteOrm>();
 
-            builder.Services.AddEntityFrameworkConfig(builder.Configuration);
-        }
+        builder.Services.AddEntityFrameworkConfig(builder.Configuration);
 
-        builder.Services.AddSerilogConfig(builder.Logging);
+        builder.Services.AddSerilogConfig(builder.Logging, builder.Configuration);
 
         builder.Services.AddControllersWithViews(options =>
         {
