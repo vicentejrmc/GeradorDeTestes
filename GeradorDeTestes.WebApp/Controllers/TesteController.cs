@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
 
 namespace GeradorDeTestes.WebApp.Controllers;
+
+[Route("testes")]
 public class TesteController : Controller
 {
     private readonly TesteAppService testeAppService;

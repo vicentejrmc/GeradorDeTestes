@@ -1,0 +1,59 @@
+﻿﻿@using GeradorDeTestes.Dominio.Extensions;
+@model VisualizarTestesViewModel
+
+@{
+    ViewBag.Titulo = "Visualização de Testes";
+
+    var notificacao = ViewData[nameof(NotificacaoViewModel)] as NotificacaoViewModel;
+}
+
+<p>
+    <a class="btn btn-primary px-4" asp-action="PrimeiraEtapaGerar">
+        <i class="bi bi-plus"></i>
+        Gerar Novo
+    </a>
+</p>
+
+<hr />
+
+@if (notificacao is not null)
+{
+    <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
+        <h6>@notificacao.Titulo</h6>
+        @notificacao.Mensagem
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row g-1">
+    @foreach (var registro in Model.Registros)
+    {
+        <div class="col-12 col-md-3">
+            <div class="card border-0">
+                <div class="card-body">
+                    <h5 class="card-title">@registro.Titulo</h5>
+
+                    <p class="card-text mb-0">
+                        <span class="fw-semibold">Série:</span> @registro.Serie
+                    </p>
+
+                    <p class="card-text mb-0">
+                        <span class="fw-semibold">Disciplina:</span> @registro.Disciplina
+                    </p>
+
+                    <span class="d-flex gap-1 justify-content-end mt-4">
+                        <a asp-action="Duplicar" asp-route-id="@registro.Id" class="btn btn-secondary rounded-circle card-option" title="Duplicar">
+                            <i class="bi bi-copy"></i>
+                        </a>
+                        <a asp-action="Detalhes" asp-route-id="@registro.Id" class="btn btn-secondary rounded-circle card-option" title="Detalhes">
+                            <i class="bi bi-search"></i>
+                        </a>
+                        <a asp-action="Excluir" asp-route-id="@registro.Id" class="btn btn-danger rounded-circle card-option" title="Exclusão">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
