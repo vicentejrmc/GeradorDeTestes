@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeradorDeTestes.Aplicacao",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeradorDeTestes.Infraestrutura.Pdf", "GeradorDeTestes.Infraestrutura.Pdf\GeradorDeTestes.Infraestrutura.Pdf.csproj", "{B96BD10D-0F67-4F2B-9CC3-443BC5694922}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeradorDeTestes.Infraestrutura.IAGemini", "GeradorDeTestes.Infraestrutura.IAGemini\GeradorDeTestes.Infraestrutura.IAGemini.csproj", "{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B96BD10D-0F67-4F2B-9CC3-443BC5694922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B96BD10D-0F67-4F2B-9CC3-443BC5694922}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B96BD10D-0F67-4F2B-9CC3-443BC5694922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{DE073727-C816-4F88-AC1B-748898A59394} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{9795AC05-23ED-4303-B32E-9F7D709832A4} = {69AF0BFA-6ACA-45D4-883D-CC4F3563AC49}
 		{B96BD10D-0F67-4F2B-9CC3-443BC5694922} = {BF1D1005-DF5E-43E0-B300-665C262EB5CC}
+		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58} = {BF1D1005-DF5E-43E0-B300-665C262EB5CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A2510C5-5B71-414D-ACA0-A35806BCFD39}

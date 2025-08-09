@@ -27,7 +27,6 @@ public class Program
         builder.Services.AddScoped<MateriaAppService>();
         builder.Services.AddScoped<QuestaoAppService>();
         builder.Services.AddScoped<TesteAppService>();
-
         //Repositorios
         builder.Services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaOrm>();
         builder.Services.AddScoped<IRepositorioMateria, RepositorioMateriaOrm>();
@@ -37,6 +36,8 @@ public class Program
         builder.Services.AddEntityFrameworkConfig(builder.Configuration);
 
         builder.Services.AddSerilogConfig(builder.Logging, builder.Configuration);
+        builder.Services.AddQuestPDFConfig();
+        builder.Services.AddGeminiChatConfig(builder.Configuration);
 
         builder.Services.AddControllersWithViews(options =>
         {

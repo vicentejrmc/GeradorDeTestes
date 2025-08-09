@@ -1,4 +1,4 @@
-﻿    using FluentResults;
+﻿using FluentResults;
 using GeradorDeTestes.Aplicacao.Compartilhado;
 using GeradorDeTestes.Dominio.Compartilhado;
 using GeradorDeTestes.Dominio.ModuloMateria;
@@ -16,21 +16,21 @@ public class QuestaoAppService
 {
     private readonly IRepositorioQuestao repositorioQuestao;
     private readonly IRepositorioTeste repositorioTeste;
-    //private readonly IGeradorQuestoes geradorQuestoes;
+    private readonly IGeradorQuestoes geradorQuestoes;
     private readonly IUnitOfWork unitOfWork;
     private readonly ILogger<QuestaoAppService> logger;
 
     public QuestaoAppService(
         IRepositorioQuestao repositorioQuestao,
         IRepositorioTeste repositorioTeste,
-        //IGeradorQuestoes geradorQuestoes,
+        IGeradorQuestoes geradorQuestoes,
         IUnitOfWork unitOfWork,
         ILogger<QuestaoAppService> logger
     )
     {
         this.repositorioQuestao = repositorioQuestao;
         this.repositorioTeste = repositorioTeste;
-        //this.geradorQuestoes = geradorQuestoes;
+        this.geradorQuestoes = geradorQuestoes;
         this.unitOfWork = unitOfWork;
         this.logger = logger;
     }
@@ -203,19 +203,19 @@ public class QuestaoAppService
         }
     }
 
-    //public async Task<Result<List<Questao>>> GerarQuestoesDaMateria(Materia materiaSelecionada, int quantidadeQuestoes)
-    //{
-    //    try
-    //    {
-    //        List<Questao> questoes = await geradorQuestoes.GerarQuestoesAsync(materiaSelecionada, quantidadeQuestoes);
+    public async Task<Result<List<Questao>>> GerarQuestoesDaMateria(Materia materiaSelecionada, int quantidadeQuestoes)
+    {
+        try
+        {
+            List<Questao> questoes = await geradorQuestoes.GerarQuestoesAsync(materiaSelecionada, quantidadeQuestoes);
 
-    //         return Result.Ok(questoes);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        logger.LogError(ex, "Ocorreu um erro durante a geração de questões da matéria {@Registro}.", materiaSelecionada);
+            return Result.Ok(questoes);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Ocorreu um erro durante a geração de questões da matéria {@Registro}.",materiaSelecionada);
 
-    //        return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
-    //    }
-    //}
+            return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
+        }
+    }
 }
