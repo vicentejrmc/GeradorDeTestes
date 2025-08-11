@@ -15,11 +15,13 @@ public class DisciplinaAppService
     private readonly IUnitOfWork unitOfWork;
     private readonly ILogger<DisciplinaAppService> logger;
 
-    public DisciplinaAppService(IRepositorioDisciplina repositorioDisciplina,
+    public DisciplinaAppService(
+        IRepositorioDisciplina repositorioDisciplina,
         IRepositorioMateria repositorioMateria,
         IRepositorioTeste repositorioTeste,
         IUnitOfWork unitOfWork,
-        ILogger<DisciplinaAppService> logger)
+        ILogger<DisciplinaAppService> logger
+    )
     {
         this.repositorioDisciplina = repositorioDisciplina;
         this.repositorioMateria = repositorioMateria;
@@ -32,25 +34,24 @@ public class DisciplinaAppService
     {
         var registros = repositorioDisciplina.SelecionarRegistros();
 
-        if (registros.Any(d => d.Nome.Equals(disciplina.Nome)))
-            return Result.Fail(ResultadosErro.RegistroDuplicadoErro("Já existe uma disciplina registrada com esse nome."));
+        if (registros.Any(i => i.Nome.Equals(disciplina.Nome)))
+            return Result.Fail(ResultadosErro.RegistroDuplicadoErro("Já existe uma disciplina registrada com este nome."));
 
         try
         {
             repositorioDisciplina.Cadastrar(disciplina);
             unitOfWork.Commit();
-
             return Result.Ok();
         }
         catch (Exception ex)
         {
             unitOfWork.Rollback();
+
             logger.LogError(
                 ex,
                 "Ocorreu um erro durante o registro de {@Registro}.",
                 disciplina
             );
-
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
     }

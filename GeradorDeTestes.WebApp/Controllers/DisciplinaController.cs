@@ -45,30 +45,36 @@ public class DisciplinaController : Controller
         return View(visualizarVm);
     }
 
-    [HttpGet("cadastrar")]   
+    [HttpGet("cadastrar")]
     public IActionResult Cadastrar()
     {
         var cadastrarVM = new CadastrarDisciplinaViewModel();
+
         return View(cadastrarVM);
     }
 
     [HttpPost("cadastrar")]
     [ValidateAntiForgeryToken]
-    public IActionResult Cadastrar(CadastrarDisciplinaViewModel cadastrarVm)
+    public IActionResult Cadastrar(CadastrarDisciplinaViewModel cadastrarVM)
     {
-        var entidade = FormularioDisciplinaViewModel.ParaEntidade(cadastrarVm);
-        var result = disciplinaAppService.Cadastrar(entidade);
+        var entidade = FormularioDisciplinaViewModel.ParaEntidade(cadastrarVM);
 
-        if(result.IsFailed)
+        var resultado = disciplinaAppService.Cadastrar(entidade);
+
+        if (resultado.IsFailed)
         {
-            foreach(var erro in result.Errors)
+            foreach (var erro in resultado.Errors)
             {
                 if (erro.Metadata["TipoErro"].ToString() == "RegistroDuplicado")
-                    ModelState.AddModelError("CadastroUnico", erro.Reasons[0].Message); break;
-
+                {
+                    ModelState.AddModelError("CadastroUnico", erro.Reasons[0].Message);
+                    break;
+                }
             }
-            return View(cadastrarVm);
+
+            return View(cadastrarVM);
         }
+
         return RedirectToAction(nameof(Index));
     }
 

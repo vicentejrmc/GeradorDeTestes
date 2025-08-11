@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace GeradorDeTestes.Dominio.ModuloDisciplina;
 public class Disciplina : EntidadeBase<Disciplina>
 {
-    public string Nome { get; set; } 
+    public string Nome { get; set; }
     public List<Materia> Materias { get; set; }
     public List<Teste> Testes { get; set; }
 
@@ -22,25 +22,36 @@ public class Disciplina : EntidadeBase<Disciplina>
         Testes = new List<Teste>();
     }
 
-    public Disciplina(String nome) : this()
+    public Disciplina(string nome) : this()
     {
-        Guid Id = Guid.NewGuid();
+        Id = Guid.NewGuid();
         Nome = nome;
+    }
+
+    public void AdicionarMateria(Materia materia)
+    {
+        if (Materias.Contains(materia))
+            return;
+
+        Materias.Add(materia);
     }
 
     public List<Questao> SortearQuestoes(int quantidadeQuestoes, SerieMateria serie)
     {
-        var questoes = new List<Questao>();
+        var questoesRelacionadas = new List<Questao>();
 
         foreach (var mat in Materias)
         {
             if (mat.Serie.Equals(serie))
-                questoes.AddRange(mat.Questoes);
+                questoesRelacionadas.AddRange(mat.Questoes);
         }
 
-        var rand = new Random();
+        var random = new Random();
 
-        return questoes.OrderBy(q => rand.Next()).Take(quantidadeQuestoes).ToList();
+        return questoesRelacionadas
+            .OrderBy(q => random.Next())
+            .Take(quantidadeQuestoes)
+            .ToList();
     }
 
     public override void AtualizarRegistro(Disciplina registroEditado)
