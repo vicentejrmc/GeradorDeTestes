@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeradorDeTestes.Infraestrut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeradorDeTestes.Infraestrutura.IAGemini", "GeradorDeTestes.Infraestrutura.IAGemini\GeradorDeTestes.Infraestrutura.IAGemini.csproj", "{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Testes", "4.Testes", "{F8047713-E525-4E8E-9C52-E0B4429E0AB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeradorDeTestes.Testes.Integracao", "GeradorDeTestes.Testes.Integracao\GeradorDeTestes.Testes.Integracao.csproj", "{40A76402-3EBB-45B5-BCF8-57D2D0DF9A75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,10 @@ Global
 		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40A76402-3EBB-45B5-BCF8-57D2D0DF9A75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40A76402-3EBB-45B5-BCF8-57D2D0DF9A75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40A76402-3EBB-45B5-BCF8-57D2D0DF9A75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40A76402-3EBB-45B5-BCF8-57D2D0DF9A75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +70,7 @@ Global
 		{9795AC05-23ED-4303-B32E-9F7D709832A4} = {69AF0BFA-6ACA-45D4-883D-CC4F3563AC49}
 		{B96BD10D-0F67-4F2B-9CC3-443BC5694922} = {BF1D1005-DF5E-43E0-B300-665C262EB5CC}
 		{04D914ED-585F-4BD7-AC44-E6DE11FDFE58} = {BF1D1005-DF5E-43E0-B300-665C262EB5CC}
+		{40A76402-3EBB-45B5-BCF8-57D2D0DF9A75} = {F8047713-E525-4E8E-9C52-E0B4429E0AB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A2510C5-5B71-414D-ACA0-A35806BCFD39}
