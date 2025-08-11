@@ -99,6 +99,7 @@ public class MateriaAppService
             {
                 var erro = ResultadosErro
                     .ExclusaoBloqueadaErro("A matéria não pôde ser excluída pois está em uma ou mais questões ativas.");
+
                 return Result.Fail(erro);
             }
 
@@ -108,22 +109,20 @@ public class MateriaAppService
             {
                 var erro = ResultadosErro
                     .ExclusaoBloqueadaErro("A matéria não pôde ser excluída pois está em um ou mais testes ativo.");
+
                 return Result.Fail(erro);
             }
 
             repositorioDisciplina.Excluir(id);
             unitOfWork.Commit();
             return Result.Ok();
+
         }
         catch (Exception ex)
         {
             unitOfWork.Rollback();
 
-            logger.LogError(
-                ex,
-                "Ocorreu um erro durante a exclusão do registro {Id}.",
-                id
-            );
+            logger.LogError(ex,"Ocorreu um erro durante a exclusão do registro {Id}.",id);
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
     }

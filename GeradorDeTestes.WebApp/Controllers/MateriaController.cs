@@ -157,8 +157,10 @@ public class MateriaController : Controller
         {
             foreach (var erro in resultado.Errors)
             {
-                var notificacaoJson = NotificacaoViewModel.GerarNotificacaoSerializada
-                    (erro.Message, erro.Reasons[0].Message);
+                var notificacaoJson = NotificacaoViewModel.GerarNotificacaoSerializada(
+                    erro.Message,
+                    erro.Reasons[0].Message
+                );
 
                 TempData.Add(nameof(NotificacaoViewModel), notificacaoJson); break;
             }
@@ -167,9 +169,7 @@ public class MateriaController : Controller
 
         var registroSelecionado = resultado.Value;
 
-        var excluirVM = new ExcluirMateriaViewModel
-            (registroSelecionado.Id, registroSelecionado.Nome);
-
+        var excluirVM = new ExcluirMateriaViewModel(registroSelecionado.Id, registroSelecionado.Nome);
         return View(excluirVM);
     }
 
@@ -183,8 +183,7 @@ public class MateriaController : Controller
         {
             foreach (var erro in resultado.Errors)
             {
-                var notificacaoJson = NotificacaoViewModel.GerarNotificacaoSerializada
-                    (erro.Message,erro.Reasons[0].Message);
+                var notificacaoJson = NotificacaoViewModel.GerarNotificacaoSerializada(erro.Message, erro.Reasons[0].Message);
 
                 TempData.Add(nameof(NotificacaoViewModel), notificacaoJson); break;
             }
