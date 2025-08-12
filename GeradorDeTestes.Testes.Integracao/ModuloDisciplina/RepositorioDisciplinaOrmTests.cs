@@ -20,7 +20,7 @@ public sealed class RepositorioDisciplinaOrmTests
     { 
         dbContext = TesteDbContextFactory.CriarDbContext();
         repositorioDisciplina = new RepositorioDisciplinaOrm(dbContext);
-    }
+}
 
     [TestMethod]
     public void CadastrarDisciplinaCorretamente()
