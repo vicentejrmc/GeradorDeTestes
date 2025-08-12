@@ -40,7 +40,7 @@ public sealed class RepositorioDisciplinaOrmTests
     }
 
     [TestMethod]
-    public void CadastrarRegistroCorretamente()
+    public void CadastrarDisciplinaCorretamente()
     {
         //Ararnge
         var disciplina = new Disciplina("Programação Sequencial");
@@ -55,7 +55,7 @@ public sealed class RepositorioDisciplinaOrmTests
     }
 
     [TestMethod]
-    public void SelecionarRegistrosCorretamente()
+    public void SelecionarDisciplinasCorretamente()
     {
         //1 - Arrange.
         var disciplina = new Disciplina("Programação Sequencial");
@@ -78,7 +78,7 @@ public sealed class RepositorioDisciplinaOrmTests
     }
 
     [TestMethod]
-    public void EditarRegistrosCorretamente()
+    public void EditarDisciplinaCorretamente()
     {
         //Arrange
         var disciplina = new Disciplina("Vetores");
@@ -98,5 +98,23 @@ public sealed class RepositorioDisciplinaOrmTests
             // verifica se o resultado da edição é true;
         Assert.AreEqual(disciplina, registroSelecionado);
             // verifica se os registros são iguais levando em contaa  referencia original dentro do contexto(método) do teste
+    }
+
+    [TestMethod]
+    public void ExcluirDisciplinaCorretamente()
+    {
+        //Arrange
+        var disciplina = new Disciplina("Vetores");
+        repositorioDisciplina.Cadastrar(disciplina);
+        dbContext.SaveChanges();
+
+        //Act
+        var conseguiuExcluir = repositorioDisciplina.Excluir(disciplina.Id);
+        dbContext.SaveChanges();
+
+        //Assert
+        var resgistroSelecionado = repositorioDisciplina.SelecionarRegistroPorId(disciplina.Id);
+        Assert.IsTrue(conseguiuExcluir);
+        Assert.IsNull(resgistroSelecionado);
     }
 }
