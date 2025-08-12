@@ -1,9 +1,7 @@
 ﻿using GeradorDeTestes.Dominio.ModuloDisciplina;
 using GeradorDeTestes.Infraestrutura.Orm.Compartilhado;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloDisciplina;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
+using GeradorDeTestes.Testes.Integracao.Compatilhado;
 
 namespace GeradorDeTestes.Testes.Integracao.ModuloDisciplina;
 
@@ -19,24 +17,9 @@ public sealed class RepositorioDisciplinaOrmTests
     //Método que é executado antes de cada teste.
     [TestInitialize]
     public void ConfigurarTestes()
-    {
-        //configurando qual projeto que será executado por meio do Assembly
-        var assembly = typeof(RepositorioDisciplinaOrmTests).Assembly;
-        var configuracao = new ConfigurationBuilder()
-            .AddUserSecrets(assembly)
-            .Build();
-
-        //configurando conecção com bando de dados
-        var connectionStrig = configuracao["SQL_CONNECTION_STRING"];
-        var options = new DbContextOptionsBuilder<GeradorDeTestesDbContext>()
-            .UseNpgsql(connectionStrig)
-            .Options;
-
-        dbContext = new GeradorDeTestesDbContext(options);
+    { 
+        dbContext = TesteDbContextFactory.CriarDbContext();
         repositorioDisciplina = new RepositorioDisciplinaOrm(dbContext);
-
-        dbContext.Database.EnsureDeleted(); // limpa o banco de dados para não haver conflitos entres testes
-        dbContext.Database.EnsureCreated();  //Cria banco de dados
     }
 
     [TestMethod]
