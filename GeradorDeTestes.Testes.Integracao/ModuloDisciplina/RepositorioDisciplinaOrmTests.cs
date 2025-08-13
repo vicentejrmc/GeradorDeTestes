@@ -9,19 +9,8 @@ namespace GeradorDeTestes.Testes.Integracao.ModuloDisciplina;
 
 [TestClass]
 [TestCategory("Integração - Disciplina")]
-public sealed class RepositorioDisciplinaOrmTests
+public sealed class RepositorioDisciplinaOrmTests : TesteFixture
 {
-    private GeradorDeTestesDbContext dbContext;
-    private RepositorioDisciplinaOrm repositorioDisciplina;
-
-    //Método que é executado antes de cada teste.
-    [TestInitialize]
-    public void ConfigurarTestes()
-    { 
-        dbContext = TesteDbContextFactory.CriarDbContext();
-        repositorioDisciplina = new RepositorioDisciplinaOrm(dbContext);
-}
-
     [TestMethod]
     public void CadastrarDisciplinaCorretamente()
     {
@@ -33,7 +22,7 @@ public sealed class RepositorioDisciplinaOrmTests
         dbContext.SaveChanges();
 
         //Assert
-        var registro = repositorioDisciplina.SelecionarRegistroPorId(disciplina.Id);      
+        var registro = repositorioDisciplina.SelecionarRegistroPorId(disciplina.Id);
         Assert.AreEqual(disciplina, registro);
     }
 
@@ -50,14 +39,14 @@ public sealed class RepositorioDisciplinaOrmTests
 
         dbContext.SaveChanges();
 
-        List<Disciplina> listDisciplinas = [disciplina ,disciplina1, disciplina2];
+        List<Disciplina> listDisciplinas = [disciplina, disciplina1, disciplina2];
 
         //2 - Act.
         var registrosSelecionados = repositorioDisciplina.SelecionarRegistros();
 
         //3.Assert
         //Verifica se a lista dos selecionados é igual a lista que fois salva para o teste
-        CollectionAssert.Equals(listDisciplinas, registrosSelecionados); 
+        CollectionAssert.Equals(listDisciplinas, registrosSelecionados);
     }
 
     [TestMethod]
@@ -77,10 +66,10 @@ public sealed class RepositorioDisciplinaOrmTests
         //Assert
         var registroSelecionado = repositorioDisciplina.SelecionarRegistroPorId(disciplina.Id);
 
-        Assert.IsTrue(etidadoComSucesso); 
-            // verifica se o resultado da edição é true;
+        Assert.IsTrue(etidadoComSucesso);
+        // verifica se o resultado da edição é true;
         Assert.AreEqual(disciplina, registroSelecionado);
-            // verifica se os registros são iguais levando em contaa  referencia original dentro do contexto(método) do teste
+        // verifica se os registros são iguais levando em contaa  referencia original dentro do contexto(método) do teste
     }
 
     [TestMethod]

@@ -4,35 +4,54 @@ using GeradorDeTestes.Infraestrutura.Orm.ModuloDisciplina;
 using GeradorDeTestes.Testes.Integracao.ModuloDisciplina;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Testcontainers.PostgreSql;
 
 namespace GeradorDeTestes.Testes.Integracao.Compatilhado;
-public static class TesteDbContextFactory
+public class TesteDbContextFactory
 {
-    public static GeradorDeTestesDbContext CriarDbContext()
+    public static GeradorDeTestesDbContext CriarDbContext(string connectionString)
     {
-        //configurando conecção com bando de dados
-        var configuracao = CriarConfiguracao();
-
-        var connectionStrig = configuracao["SQL_CONNECTION_STRING"];
         var options = new DbContextOptionsBuilder<GeradorDeTestesDbContext>()
-            .UseNpgsql(connectionStrig)
+            .UseNpgsql(connectionString)
             .Options;
 
         var dbContext = new GeradorDeTestesDbContext(options);
 
-        dbContext.Database.EnsureDeleted(); // limpa o banco de dados para não haver conflitos entres testes
-        dbContext.Database.EnsureCreated();  //Cria banco de dados
-
         return dbContext;
     }
 
-    public static IConfiguration CriarConfiguracao()
-    {
-        //configurando qual projeto que será executado por meio do Assembly
-        var assembly = typeof(RepositorioDisciplinaOrmTests).Assembly;
 
-        return new ConfigurationBuilder()
-            .AddUserSecrets(assembly)
-            .Build();
-    }
+    //public TesteDbContextFactory()
+    //{
+    //    var options = new DbContextOptionsBuilder<GeradorDeTestesDbContext>()
+    //        .UseNpgsql()
+
+    //    container = new PostgreSqlBuilder()
+    //        .WithImage("postgres:16")
+    //        .WithName("gerador-de-testes-testsdb-container")
+    //        .Build();
+    //}
+
+    //public async Task InicializarAsync()
+    //{
+    //    await container.StartAsync();
+    //}
+
+    //public async Task EncerrarAsync()
+    //{
+    //    await container.StopAsync();
+    //    await container.DisposeAsync();
+    //}
+
+
+    //public static GeradorDeTestesDbContext CriarDbContext(string connectionString)
+    //{
+    //    var options = new DbContextOptionsBuilder<GeradorDeTestesDbContext>()
+    //        .UseNpgsql(connectionString)
+    //        .Options;
+
+    //    var dbContext = new GeradorDeTestesDbContext(options);
+
+    //    return dbContext;
+    //}
 }

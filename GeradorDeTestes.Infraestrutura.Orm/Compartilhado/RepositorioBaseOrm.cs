@@ -21,6 +21,10 @@ public class RepositorioBaseOrm<T> where T : EntidadeBase<T>
     {
         registros.Add(novoRegistro);
     }
+    public void CadastrarEntidades(IList<T> entidades)
+    {
+        registros.AddRange(entidades);
+    }
 
     public bool Editar(Guid idRegistro, T registroEditado)
     {

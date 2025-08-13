@@ -5,29 +5,14 @@ using GeradorDeTestes.Infraestrutura.Orm.ModuloDisciplina;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloMateria;
 using GeradorDeTestes.Testes.Integracao.Compatilhado;
 using FizzWare.NBuilder;
+using Testcontainers.PostgreSql;
 
 namespace GeradorDeTestes.Testes.Integracao.ModuloMateria;
 
 [TestClass]
 [TestCategory("Integração - Materia")]
-public sealed class RepositorioMateriaOrmTests
+public sealed class RepositorioMateriaOrmTests : TesteFixture
 {
-    private GeradorDeTestesDbContext dbContext;
-    private RepositorioMateriaOrm repositorioMateria;
-    private RepositorioDisciplinaOrm repositorioDisciplina;
-
-    [TestInitialize]
-    public void ConfigurarTestes()
-    {
-        dbContext = TesteDbContextFactory.CriarDbContext();
-        repositorioDisciplina = new RepositorioDisciplinaOrm(dbContext);
-        repositorioMateria = new RepositorioMateriaOrm(dbContext);
-
-        //usando NBuilder conseguimos configurar o "cadastro" de entidades necessarias para a entidade que está sendo testada.
-        //sem a necessidade de criar ou cadastra-la dentro do teste da entidade em questão.
-        BuilderSetup.SetCreatePersistenceMethod<Disciplina>(repositorioDisciplina.Cadastrar);
-    }
-
     [TestMethod]
     public void CadastrarMateriaCorretamente()
     {
