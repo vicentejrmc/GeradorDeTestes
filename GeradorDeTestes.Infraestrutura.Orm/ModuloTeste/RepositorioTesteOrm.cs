@@ -27,6 +27,7 @@ public class RepositorioTesteOrm : RepositorioBaseOrm<Teste>, IRepositorioTeste
     public override List<Teste> SelecionarRegistros()
     {
         return registros
+            .OrderBy(t => t.Titulo)
             .Include(t => t.Questoes)
             .ThenInclude(q => q.Materia)
             .Include(t => t.Disciplina)
