@@ -26,6 +26,7 @@ public class PrimeiraEtapaGerarTesteViewModel
     [Required(ErrorMessage = "O campo \"Quantidade de Questões\" é obrigatório.")]
     [Range(1, 100, ErrorMessage = "O campo \"Quantidade de Questões\" precisa conter um valor numérico entre 1 e 100.")]
     public int QuantidadeQuestoes { get; set; }
+
     public bool Recuperacao { get; set; }
 
     public static SegundaEtapaGerarTesteViewModel AvancarEtapa(
@@ -37,13 +38,18 @@ public class PrimeiraEtapaGerarTesteViewModel
         return new SegundaEtapaGerarTesteViewModel
         {
             Titulo = primeiraEtapaVm.Titulo ?? string.Empty,
+
             DisciplinaId = primeiraEtapaVm.DisciplinaId,
             Disciplina = disciplinaSelecionada.Nome,
+
             Serie = primeiraEtapaVm.Serie,
             NomeSerie = primeiraEtapaVm.Serie.GetDisplayName() ?? primeiraEtapaVm.Serie.ToString(),
             QuantidadeQuestoes = primeiraEtapaVm.QuantidadeQuestoes,
             Recuperacao = primeiraEtapaVm.Recuperacao,
-            MateriasDisponiveis = materiasFiltradas.Select(m => new SelectListItem(m.Nome, m.Id.ToString())).ToList()
+
+            MateriasDisponiveis = materiasFiltradas
+                .Select(m => new SelectListItem(m.Nome, m.Id.ToString()))
+                .ToList()
         };
     }
 }
@@ -51,12 +57,16 @@ public class PrimeiraEtapaGerarTesteViewModel
 public class SegundaEtapaGerarTesteViewModel
 {
     public required string Titulo { get; set; }
+
     public required Guid DisciplinaId { get; set; }
     public required string Disciplina { get; set; }
+
     public required SerieMateria Serie { get; set; }
     public required string NomeSerie { get; set; }
+
     public required int QuantidadeQuestoes { get; set; }
     public required bool Recuperacao { get; set; }
+
     public Guid? MateriaId { get; set; }
     public List<SelectListItem>? MateriasDisponiveis { get; set; } = new List<SelectListItem>();
 
@@ -76,9 +86,13 @@ public class SegundaEtapaGerarTesteViewModel
 
         var materia = materias.Find(d => d.Id.Equals(segundaEtapaVm.MateriaId));
 
-        var idsQuestoesSelecionadas = segundaEtapaVm.QuestoesSorteadas.Select(q => q.Id).ToHashSet();
+        var idsQuestoesSelecionadas = segundaEtapaVm.QuestoesSorteadas
+            .Select(q => q.Id)
+            .ToHashSet();
 
-        var questoesSelecionadas = questoes.Where(q => idsQuestoesSelecionadas.Contains(q.Id)).ToList();
+        var questoesSelecionadas = questoes
+            .Where(q => idsQuestoesSelecionadas.Contains(q.Id))
+            .ToList();
 
         return new Teste(
             segundaEtapaVm.Titulo,
@@ -112,6 +126,7 @@ public class DuplicarTesteViewModel
     [MinLength(2, ErrorMessage = "O campo \"Título\" precisa conter ao menos 2 caracteres.")]
     [MaxLength(100, ErrorMessage = "O campo \"Título\" precisa conter no máximo 100 caracteres.")]
     public string Titulo { get; set; }
+
     public required Guid DisciplinaId { get; set; }
     public required string Disciplina { get; set; }
     public required SerieMateria Serie { get; set; }
@@ -136,8 +151,14 @@ public class DuplicarTesteViewModel
             throw new InvalidOperationException("A disciplina requisitada não foi encontrada no sistema.");
 
         var materia = materias.Find(d => d.Id.Equals(segundaEtapaVm.MateriaId));
-        var idsQuestoesSelecionadas = segundaEtapaVm.QuestoesSorteadas.Select(q => q.Id).ToHashSet();
-        var questoesSelecionadas = questoes.Where(q => idsQuestoesSelecionadas.Contains(q.Id)).ToList();
+
+        var idsQuestoesSelecionadas = segundaEtapaVm.QuestoesSorteadas
+            .Select(q => q.Id)
+            .ToHashSet();
+
+        var questoesSelecionadas = questoes
+            .Where(q => idsQuestoesSelecionadas.Contains(q.Id))
+            .ToList();
 
         return new Teste(
             segundaEtapaVm.Titulo,
@@ -151,13 +172,16 @@ public class DuplicarTesteViewModel
     }
 }
 
+
 public class VisualizarTestesViewModel
 {
     public List<DetalhesTesteViewModel> Registros { get; set; }
 
     public VisualizarTestesViewModel(List<Teste> testes)
     {
-        Registros = testes.Select(DetalhesTesteViewModel.ParaDetalhesVm).ToList();
+        Registros = testes
+            .Select(DetalhesTesteViewModel.ParaDetalhesVm)
+            .ToList();
     }
 }
 
@@ -183,15 +207,16 @@ public class DetalhesTesteViewModel
             Disciplina = teste.Disciplina.Nome,
             Materia = teste.Materia?.Nome,
             Serie = teste.Serie.GetDisplayName() ?? teste.Serie.ToString(),
-            QuestoesSorteadas = teste.Questoes.Select(q => new DetalhesQuestaoViewModel
-            (
-                q.Id,
-                q.Enunciado,
-                q.Materia.Nome,
-                q.UtilizadaEmTeste ? "Sim" : "Não",
-                q.AlternativaCorreta?.Resposta ?? string.Empty,
-                q.Alternativas
-            )).ToList()
+            QuestoesSorteadas = teste.Questoes
+                .Select(q => new DetalhesQuestaoViewModel(
+                    q.Id,
+                    q.Enunciado,
+                    q.Materia.Nome,
+                    q.UtilizadaEmTeste ? "Sim" : "Não",
+                    q.AlternativaCorreta?.Resposta ?? string.Empty,
+                    q.Alternativas
+                ))
+                .ToList()
         };
     }
 }

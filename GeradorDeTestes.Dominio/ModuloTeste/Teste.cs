@@ -81,7 +81,7 @@ public class Teste : EntidadeBase<Teste>
         }
     }
 
-    public List<Questao>? SortearQuestao()
+    public List<Questao>? SortearQuestoes()
     {
         RemoverQuestoesAtuais();
 

@@ -13,6 +13,7 @@ public class GeradorTestePdf : IGeradorTeste
     {
         var document = new TesteDocument(teste, gabarito);
         var pdfBytes = document.GeneratePdf();
+
         return pdfBytes;
     }
 }

@@ -30,7 +30,6 @@ public class TesteController : Controller
         this.materiaAppService = materiaAppService;
         this.disciplinaAppService = disciplinaAppService;
     }
-
     [HttpGet]
     public IActionResult Index()
     {
@@ -45,19 +44,24 @@ public class TesteController : Controller
                     erro.Reasons[0].Message
                 );
 
-                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson); break;
+                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson);
+                break;
             }
+
             return RedirectToAction("erro", "home");
         }
 
         var visualizarVm = new VisualizarTestesViewModel(resultado.ValueOrDefault);
+
         var existeNotificacao = TempData.TryGetValue(nameof(NotificacaoViewModel), out var valor);
 
         if (existeNotificacao && valor is string jsonString)
         {
             var notificacaoVm = JsonSerializer.Deserialize<NotificacaoViewModel>(jsonString);
+
             ViewData.Add(nameof(NotificacaoViewModel), notificacaoVm);
         }
+
         return View(visualizarVm);
     }
 
@@ -65,12 +69,14 @@ public class TesteController : Controller
     public IActionResult PrimeiraEtapaGerar()
     {
         var disciplinas = disciplinaAppService.SelecionarTodos().ValueOrDefault;
+
         var primeiraEtapaVm = new PrimeiraEtapaGerarTesteViewModel
         {
             DisciplinasDisponiveis = disciplinas
                 .Select(d => new SelectListItem(d.Nome, d.Id.ToString()))
                 .ToList()
         };
+
         return View(primeiraEtapaVm);
     }
 
@@ -78,11 +84,15 @@ public class TesteController : Controller
     public IActionResult PrimeiraEtapaGerar(PrimeiraEtapaGerarTesteViewModel primeiraEtapaVm)
     {
         var registros = testeAppService.SelecionarTodos().ValueOrDefault;
+
         var disciplinas = disciplinaAppService.SelecionarTodos().ValueOrDefault;
 
         if (registros.Any(i => i.Titulo.Equals(primeiraEtapaVm.Titulo)))
         {
-            ModelState.AddModelError("CadastroUnico", "Já existe um teste registrado com este nome.");
+            ModelState.AddModelError(
+                "CadastroUnico",
+                "Já existe um teste registrado com este nome."
+            );
 
             primeiraEtapaVm.DisciplinasDisponiveis = disciplinas
                 .Select(d => new SelectListItem(d.Nome, d.Id.ToString()))
@@ -110,7 +120,9 @@ public class TesteController : Controller
         );
 
         var jsonString = JsonSerializer.Serialize(segundaEtapaVm);
+
         TempData.Add(nameof(SegundaEtapaGerarTesteViewModel), jsonString);
+
         return RedirectToAction(nameof(SegundaEtapaGerar));
     }
 
@@ -142,7 +154,7 @@ public class TesteController : Controller
             questoes
         );
 
-        var questoesSorteadas = entidade.SortearQuestao();
+        var questoesSorteadas = entidade.SortearQuestoes();
 
         if (questoesSorteadas is null)
             return RedirectToAction(nameof(Index));
@@ -185,9 +197,11 @@ public class TesteController : Controller
                     erro.Reasons[0].Message
                 );
 
-                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson); break;
+                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson);
+                break;
             }
         }
+
         return RedirectToAction(nameof(Index));
     }
 
@@ -205,14 +219,19 @@ public class TesteController : Controller
                     erro.Reasons[0].Message
                 );
 
-                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson); break;
+                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson);
+                break;
             }
+
             return RedirectToAction(nameof(Index));
         }
 
         var registro = resultado.Value;
 
-        var excluirVM = new ExcluirTesteViewModel(registro.Id, registro.Titulo);
+        var excluirVM = new ExcluirTesteViewModel(
+            registro.Id,
+            registro.Titulo
+        );
 
         return View(excluirVM);
     }
@@ -232,9 +251,11 @@ public class TesteController : Controller
                     erro.Reasons[0].Message
                 );
 
-                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson); break;
+                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson);
+                break;
             }
         }
+
         return RedirectToAction(nameof(Index));
     }
 
@@ -255,6 +276,7 @@ public class TesteController : Controller
                 TempData.Add(nameof(NotificacaoViewModel), notificacaoJson);
                 break;
             }
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -277,12 +299,15 @@ public class TesteController : Controller
                     erro.Reasons[0].Message
                 );
 
-                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson); break;
+                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson);
+                break;
             }
+
             return RedirectToAction(nameof(Index));
         }
 
         var registro = resultado.Value;
+
         var disciplinas = disciplinaAppService.SelecionarTodos().ValueOrDefault;
         var questoes = questaoAppService.SelecionarTodos().ValueOrDefault;
 
@@ -328,7 +353,7 @@ public class TesteController : Controller
             questoes
         );
 
-        var questoesSorteadas = entidade.SortearQuestao();
+        var questoesSorteadas = entidade.SortearQuestoes();
 
         if (questoesSorteadas is null)
             return RedirectToAction(nameof(Index));
@@ -360,7 +385,7 @@ public class TesteController : Controller
             questoes
         );
 
-        var resultado = testeAppService.CadastrarDuplicarTeste(entidade);
+        var resultado = testeAppService.CadastrarTesteDuplicado(entidade);
 
         if (resultado.IsFailed)
         {
@@ -371,9 +396,11 @@ public class TesteController : Controller
                     erro.Reasons[0].Message
                 );
 
-                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson); break;
+                TempData.Add(nameof(NotificacaoViewModel), notificacaoJson);
+                break;
             }
         }
+
         return RedirectToAction(nameof(Index));
     }
 

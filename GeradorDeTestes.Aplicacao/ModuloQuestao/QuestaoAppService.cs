@@ -167,7 +167,7 @@ public class QuestaoAppService
 
         try
         {
-            registroSelecionado.AddAlternativa(respostaAlternativa, alternativaCorreta);
+            registroSelecionado.AicionarAlternativa(respostaAlternativa, alternativaCorreta);
             unitOfWork.Commit();
 
             return Result.Ok();

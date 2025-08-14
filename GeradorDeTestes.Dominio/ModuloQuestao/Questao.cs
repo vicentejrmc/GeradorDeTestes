@@ -14,8 +14,8 @@ public class Questao : EntidadeBase<Questao>
     public string Enunciado { get; set; }
     public bool UtilizadaEmTeste { get; set; }
     public Materia Materia { get; set; }
-    public List<Teste> Testes { get; set; }
     public List<Alternativa> Alternativas { get; set; }
+    public List<Teste> Testes { get; set; }
     public Alternativa? AlternativaCorreta => Alternativas.Find(a => a.Correta);
 
     public Questao()
@@ -28,22 +28,18 @@ public class Questao : EntidadeBase<Questao>
     {
         Id = Guid.NewGuid();
         Enunciado = enunciado;
-        UtilizadaEmTeste = false;
         Materia = materia;
+        UtilizadaEmTeste = false;
     }
 
-    public override void AtualizarRegistro(Questao registroAtualizado)
+    public Alternativa AicionarAlternativa(string resposta, bool correta)
     {
-        Enunciado = registroAtualizado.Enunciado;
-        UtilizadaEmTeste = registroAtualizado.UtilizadaEmTeste;
-    }
+        int qtdAlternativas = Alternativas.Count;
 
-    public Alternativa AddAlternativa(string resposta, bool correta)
-    {
-        int qteAlternativas = Alternativas.Count;
-        char letra = (char)('a' + qteAlternativas);
+        char letra = (char)('a' + qtdAlternativas);
 
         var alternativa = new Alternativa(letra, resposta, correta, this);
+
         Alternativas.Add(alternativa);
 
         return alternativa;
@@ -68,5 +64,11 @@ public class Questao : EntidadeBase<Questao>
         {
             Alternativas[i].Letra = (char)('a' + i);
         }
+    }
+
+    public override void AtualizarRegistro(Questao registroAtualizado)
+    {
+        Enunciado = registroAtualizado.Enunciado;
+        UtilizadaEmTeste = registroAtualizado.UtilizadaEmTeste;
     }
 }

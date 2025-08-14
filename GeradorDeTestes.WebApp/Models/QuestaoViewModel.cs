@@ -70,7 +70,7 @@ public class CadastrarQuestaoViewModel : FormularioQuestaoViewModel
         if (viewModel.AlternativasSelecionadas is not null)
         {
             foreach (var a in viewModel.AlternativasSelecionadas)
-                questao.AddAlternativa(a.Resposta, a.Correta);
+                questao.AicionarAlternativa(a.Resposta, a.Correta);
         }
 
         return questao;
@@ -259,7 +259,7 @@ public class SegundaEtapaGerarQuestoesViewModel
             var questao = new Questao(questaoVm.Enunciado, materiaSelecionada);
 
             foreach (var alternativaVm in questaoVm.AlternativasGeradas)
-                questao.AddAlternativa(alternativaVm.Resposta, alternativaVm.Correta);
+                questao.AicionarAlternativa(alternativaVm.Resposta, alternativaVm.Correta);
 
             questoes.Add(questao);
         }

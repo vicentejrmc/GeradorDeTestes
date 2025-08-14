@@ -83,7 +83,7 @@ public class GeradorQuestoesGemini : IGeradorQuestoes
             var questao = new Questao(dto.Enunciado, materia);
 
             foreach (var alt in dto.Alternativas)
-                questao.AddAlternativa(alt.Resposta, alt.Correta);
+                questao.AicionarAlternativa(alt.Resposta, alt.Correta);
 
             resultado.Add(questao);
         }

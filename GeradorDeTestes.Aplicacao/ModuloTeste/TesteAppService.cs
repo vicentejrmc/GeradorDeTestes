@@ -16,18 +16,18 @@ namespace GeradorDeTestes.Aplicacao.ModuloTeste;
 public class TesteAppService
 {
     private readonly IRepositorioTeste repositorioTeste;
-    //private readonly IGeradorTeste geradorTeste;
+    private readonly IGeradorTeste geradorTeste;
     private readonly IUnitOfWork unitOfWork;
     private readonly ILogger<TesteAppService> logger;
 
     public TesteAppService(
         IRepositorioTeste repositorioTeste,
-       // IGeradorTeste geradorTeste,
+        IGeradorTeste geradorTeste,
         IUnitOfWork unitOfWork,
         ILogger<TesteAppService> logger)
     {
         this.repositorioTeste = repositorioTeste;
-        //this.geradorTeste = geradorTeste;
+        this.geradorTeste = geradorTeste;
         this.unitOfWork = unitOfWork;
         this.logger = logger;
     }
@@ -43,26 +43,27 @@ public class TesteAppService
         catch (Exception ex)
         {
             unitOfWork.Rollback();
-            logger.LogError(ex, "Ocorreu um erro inesperado durate o registro {@ViewlModel}.", teste);
+            logger.LogError(ex, "Ocorreu um erro durante o registro de {@ViewModel}.", teste);
+
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
     }
 
-    public Result CadastrarDuplicarTeste(Teste teste)
-    {
-        return Cadastrar(teste);
-    }
-
-    public Result<List<Teste>> SelecionarTodos()
+    public Result Excluir(Guid id)
     {
         try
         {
-            var registros = repositorioTeste.SelecionarRegistros();
-            return Result.Ok(registros);
+            repositorioTeste.Excluir(id);
+            unitOfWork.Commit();
+            return Result.Ok();
+
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ocorreu um erro durante a seleção de registros.");
+            unitOfWork.Rollback();
+
+            logger.LogError(ex, "Ocorreu um erro durante a exclusão do registro {Id}.", id);
+
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
     }
@@ -80,29 +81,32 @@ public class TesteAppService
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ocorreu um erro durante a seleção do registro {Id}.",id);
+            logger.LogError(ex, "Ocorreu um erro durante a seleção do registro {Id}.", id);
+
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
     }
 
-    public Result Excluir(Guid id)
+    public Result<List<Teste>> SelecionarTodos()
     {
         try
         {
-            repositorioTeste.Excluir(id);
-            unitOfWork.Commit();
-            return Result.Ok();
+            var registros = repositorioTeste.SelecionarRegistros();
+            return Result.Ok(registros);
         }
         catch (Exception ex)
         {
-            unitOfWork.Rollback();
-            logger.LogError(ex, "Ocorreu um erro inesperado durante a exclusão do registro {id}.", id);
+            logger.LogError(ex, "Ocorreu um erro durante a seleção de registros.");
+
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
     }
 
+    public Result CadastrarTesteDuplicado(Teste teste)
+    {
+        return Cadastrar(teste);
+    }
 
-    // Aguardando Implementação de Ai para o uso do IGeradorTeste
     public Result<byte[]> GerarPdf(Guid id, bool gabarito = false)
     {
         var registroSelecionado = repositorioTeste.SelecionarRegistroPorId(id);
@@ -114,7 +118,7 @@ public class TesteAppService
 
         try
         {
-            // pdfBytes = geradorTeste.GerarNovoTeste(registroSelecionado, gabarito);
+            pdfBytes = geradorTeste.GerarNovoTeste(registroSelecionado, gabarito);
         }
         catch (Exception ex)
         {
@@ -122,6 +126,7 @@ public class TesteAppService
 
             return Result.Fail(ResultadosErro.ExcecaoInternaErro(ex));
         }
+
         return pdfBytes;
     }
 }

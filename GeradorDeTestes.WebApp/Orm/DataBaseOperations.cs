@@ -9,6 +9,7 @@ public static class DataBaseOperations
     {
         var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<GeradorDeTestesDbContext>();
+        dbContext.Database.GetPendingMigrations(); 
 
         dbContext.Database.Migrate();
     }
