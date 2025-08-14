@@ -87,7 +87,7 @@ public class Teste : EntidadeBase<Teste>
 
         var questoesSorteadas = new List<Questao>(QteQuestoes);
         if (Recuperacao)
-            questoesSorteadas = Disciplina.SortearQuestoes(QteQuestoes, Serie);
+            questoesSorteadas = Disciplina.ObterQuestoesAleatorias(QteQuestoes, Serie);
         else
             questoesSorteadas = Materia?.SortearQuestoes(QteQuestoes);
 

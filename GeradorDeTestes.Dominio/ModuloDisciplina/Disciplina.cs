@@ -36,7 +36,7 @@ public class Disciplina : EntidadeBase<Disciplina>
         Materias.Add(materia);
     }
 
-    public List<Questao> SortearQuestoes(int quantidadeQuestoes, SerieMateria serie)
+    public List<Questao> ObterQuestoesAleatorias(int quantidadeQuestoes, SerieMateria serie)
     {
         var questoesRelacionadas = new List<Questao>();
 
