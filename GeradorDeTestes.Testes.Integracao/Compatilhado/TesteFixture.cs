@@ -9,11 +9,6 @@ using GeradorDeTestes.Infraestrutura.Orm.ModuloDisciplina;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloMateria;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloQuestao;
 using GeradorDeTestes.Infraestrutura.Orm.ModuloTeste;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Testcontainers.PostgreSql;
 
 namespace GeradorDeTestes.Testes.Integracao.Compatilhado;

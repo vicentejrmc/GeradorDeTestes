@@ -1,10 +1,5 @@
-﻿using GeradorDeTestes.Dominio.ModuloDisciplina;
-using GeradorDeTestes.Infraestrutura.Orm.Compartilhado;
-using GeradorDeTestes.Infraestrutura.Orm.ModuloDisciplina;
-using GeradorDeTestes.Testes.Integracao.ModuloDisciplina;
+﻿using GeradorDeTestes.Infraestrutura.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Testcontainers.PostgreSql;
 
 namespace GeradorDeTestes.Testes.Integracao.Compatilhado;
 public class TesteDbContextFactory
