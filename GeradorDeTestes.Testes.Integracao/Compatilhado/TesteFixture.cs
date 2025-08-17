@@ -36,6 +36,9 @@ public abstract class TesteFixture
         dbContainer = new PostgreSqlBuilder()
             .WithImage("postgres:16")
             .WithName("gerador-de-testes-container")
+            .WithDatabase("GeradorDeTestesDb")
+            .WithUsername("postgres")
+            .WithPassword("MinhaSenhaFraca")
             .WithCleanUp(true)
             .Build();
 
