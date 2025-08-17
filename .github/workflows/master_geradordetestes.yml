@@ -36,16 +36,16 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/myapp
 
   test:
-    runs-on: unbutu-latests
+    runs-on: unbutu-latest
     needs: build
     permissions:
       contents: read
     
     steps:
-      - uses: action/checkout@v4
+      - uses: actions/checkout@v4
   
       - name: Set up .Net Core
-        uses: action/setup-dotnet@v4
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
