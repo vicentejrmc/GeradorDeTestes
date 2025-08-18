@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build - Test - Migrate - Deploy
+name: Build and deploy ASP.Net Core app to Azure Web App - gerador-de-testes
 
 on:
   push:
@@ -47,7 +47,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
+          dotnet-version: '9.x'
     
       - name: Run tests
         run: dotnet test --configuration Release --verbosity normal
@@ -65,7 +65,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
+          dotnet-version: '9.x'
 
       - name: Install EF Core CLI
         run: dotnet tool install --global dotnet-ef
@@ -80,10 +80,10 @@ jobs:
   
   deploy:
     runs-on: windows-latest
-    needs: [build, test, migrate]
+    needs: build
     permissions:
-      id-token: write
-      contents: read
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -94,15 +94,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8BA7584842154E088A1C15927A5D0E51 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EA7AA62B0EBE4973A0950DD2E98D96ED }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8F10F832835F4F0B82C9BFF3A5DA3547 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7A0A660D81AA4B9AA3FEC899CB6E956D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F19FB6EAD0814E358EF06954D38675A5 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_02C9E5AF67D444538F703E7D53FE0EA5 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'geradorDeTestes'
+          app-name: 'gerador-de-testes'
           slot-name: 'Production'
           package: .
           
