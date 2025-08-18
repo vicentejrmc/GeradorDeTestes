@@ -73,7 +73,10 @@ jobs:
       - name: Apply EF Core migrations
         run: dotnet ef database update --project ./GeradorDeTestes.Infraestrutura.Orm --startup-project ./GeradorDeTestes.WebApp
         env:
+          ASPNET_ENVIRONMENT: "GITHUB_ACTIONS"
           SQL_CONNECTION_STRING: ${{ secrets.SQL_CONNECTION_STRING }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEWRELIC_LICENSE_KEY: ${{ secrets.NEWRELIC_LICENSE_KEY }}
   
   deploy:
     runs-on: windows-latest
