@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - gerador-de-testes
+name: Build - Test - Migrate - Deploy
 
 on:
   push:
@@ -35,12 +35,55 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
-    runs-on: windows-latest
+  test:
+    runs-on: ubuntu-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+    
+      - name: Run tests
+        run: dotnet test --configuration Release --verbosity normal
+
+  migrate:
+    runs-on: windows-latest
+    needs: [build, test]
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Install EF Core CLI
+        run: dotnet tool install --global dotnet-ef
+    
+      - name: Apply EF Core migrations
+        run: dotnet ef database update --project ./GeradorDeTestes.Infraestrutura.Orm --startup-project ./GeradorDeTestes.WebApp
+        env:
+          ASPNET_ENVIRONMENT: "GITHUB_ACTIONS"
+          SQL_CONNECTION_STRING: ${{ SQL_CONNECTION_STRING }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEWRELIC_LICENSE_KEY: ${{ secrets.NEWRELIC_LICENSE_KEY }}
+  
+  deploy:
+    runs-on: windows-latest
+    needs: [build, test, migrate]
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -51,15 +94,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D1FCF54C77E54276AFDEE20CF1AAC7D0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_703D7639C7DB4D699654DDF47663A9AF }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B92C85AB6038487496695730CAF543E8 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8BA7584842154E088A1C15927A5D0E51 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EA7AA62B0EBE4973A0950DD2E98D96ED }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8F10F832835F4F0B82C9BFF3A5DA3547 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'gerador-de-testes'
+          app-name: 'geradorDeTestes'
           slot-name: 'Production'
           package: .
           
