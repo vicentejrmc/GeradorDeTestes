@@ -1,7 +1,6 @@
-﻿using GeradorDeTestes.Infraestrutura.Orm.Compartilhado;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace GeradorDeTestes.Testes.Integracao.Compatilhado;
+namespace GeradorDeTestes.Infraestrutura.Orm.Compartilhado;
 public class TesteDbContextFactory
 {
     public static GeradorDeTestesDbContext CriarDbContext(string connectionString)
